@@ -16,9 +16,15 @@ export function Game() {
 
 	let winner = determineWinner(squares);
 
-	const status = winner
-		? `Winner ${winner}`
-		: `Next Player: ${isXNext ? "X" : "O"}`;
+	let status;
+
+	if (winner) {
+		status = `Winner ${winner}`;
+	} else if (!squares.includes(null) && !winner) {
+		status = "Game is draw";
+	} else {
+		status = `Next Player: ${isXNext ? "X" : "O"}`;
+	}
 
 	const handleOnPlay = (idx: number) => {
 		if (squares[idx] || determineWinner(squares)) {
@@ -40,13 +46,21 @@ export function Game() {
 	return (
 		<View style={styles.game}>
 			<View style={styles.header}>
-				<Text>{status}</Text>
-				<TouchableHighlight underlayColor={"#eee"} onPress={reset} style={styles.reset}>
-					<Feather name="refresh-ccw" size={24} color="black" />
+				<Text style={styles.status}>{status}</Text>
+				<TouchableHighlight
+					underlayColor={"#203640"}
+					activeOpacity={0.1}
+					onPress={reset}
+					style={styles.reset}
+				>
+					<Feather name="refresh-ccw" size={24} color="white" />
 				</TouchableHighlight>
 			</View>
-			<Board squares={squares} onPlay={handleOnPlay} />
-			<Board squares={squares} onPlay={handleOnPlay} />
+			<View>
+				<Board squares={squares} onPlay={handleOnPlay} />
+				<View style={styles.separator} />
+				<Board squares={squares} onPlay={handleOnPlay} />
+			</View>
 		</View>
 	);
 }
@@ -54,14 +68,21 @@ export function Game() {
 const styles = StyleSheet.create({
 	game: {
 		flex: 1,
-		justifyContent: "space-evenly",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	header: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
+		alignSelf: "stretch",
+	},
+	status: {
+		fontSize: 18,
+		color: "#ffffff"
 	},
 	reset: {
-		padding: 8
-	}
+		padding: 8,
+	},
+	separator: { height: 20 },
 });
