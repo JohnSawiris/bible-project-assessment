@@ -1,9 +1,4 @@
-import {
-	TouchableHighlight,
-	TouchableOpacity,
-	Text,
-	StyleSheet,
-} from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
 // Utils
 import { SQUARE_WIDTH } from "../../utils";
